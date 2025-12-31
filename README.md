@@ -43,11 +43,10 @@ Este projeto faz parte do ecossistema `dopme-io` e tem como objetivo principal e
 
 ## 🛠️ Tecnologias
 
-- C# 13
-- .NET 10 SDK
-- Visual Studio / VS Code
-- [LINQ](https://docs.microsoft.com/pt-br/dotnet/csharp/programming-guide/concepts/linq/)
-- [Delegates e Eventos](https://docs.microsoft.com/pt-br/dotnet/csharp/programming-guide/delegates/)
+- [C# 13](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-13)
+- [.NET 10 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
+- [Visual Studio](https://visualstudio.microsoft.com/pt-br/)
+- [VS Code](https://code.visualstudio.com/)
 
 ---
 
