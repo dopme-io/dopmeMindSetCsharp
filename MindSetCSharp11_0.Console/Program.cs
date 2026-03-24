@@ -1,0 +1,11 @@
+Console.WriteLine("=== MindSet C# 11.0 (console) ===");
+Console.WriteLine();
+Console.WriteLine("C# 11.0 — novembro de 2022; alinhado a .NET 7 e cadência anual de releases.");
+Console.WriteLine("Destaques: raw string literals, generic math, atributos genéricos, literais UTF-8,");
+Console.WriteLine("list patterns, tipos file-local, required members, ref fields / scoped ref, …");
+Console.WriteLine();
+Console.WriteLine("Roteiro: MindSetCSharp11_0.Console/Docs/README.md");
+Console.WriteLine("Comece por: Docs/csharp-11-0-overview.md");
+Console.WriteLine();
+Console.WriteLine("Prática: dotnet run --project MindSetCSharp11_0.Console");
+Console.WriteLine();

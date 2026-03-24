@@ -77,8 +77,13 @@ A solução contém **apenas projetos console** — sem bibliotecas separadas e 
 | MindSet C# 8.0 | `MindSetCSharp8_0.Console` |
 | MindSet C# 9.0 | `MindSetCSharp9_0.Console` |
 | MindSet C# 10.0 | `MindSetCSharp10_0.Console` |
+| MindSet C# 11.0 | `MindSetCSharp11_0.Console` |
+| MindSet C# 12.0 | `MindSetCSharp12_0.Console` |
+| MindSet C# 13.0 | `MindSetCSharp13_0.Console` |
+| MindSet C# 14.0 | `MindSetCSharp14_0.Console` |
+| MindSet C# 15.0 | `MindSetCSharp15_0.Console` |
 
-Cada projeto tem **`Docs/`**: em **1.0**, roteiro só da base inicial; em **1.2**, o mesmo conjunto de tópicos (cópia local) mais **[csharp-1-2-enhancements.md](MindSetCSharp1_2.Console/Docs/csharp-1-2-enhancements.md)** sobre **foreach** e **`Dispose`** no enumerador; em **2.0**, base 1.0 em cópia local mais guias dedicados (comece por **[csharp-2-0-overview.md](MindSetCSharp2_0.Console/Docs/csharp-2-0-overview.md)**); em **3.0**, cópia com guias 2.0 + base 1.0 mais guias **3.0** (comece por **[csharp-3-0-overview.md](MindSetCSharp3_0.Console/Docs/csharp-3-0-overview.md)**); em **4.0**, cópia com guias anteriores mais guias **4.0** (comece por **[csharp-4-0-overview.md](MindSetCSharp4_0.Console/Docs/csharp-4-0-overview.md)**); em **5.0**, cópia com guias anteriores mais guias **5.0** (comece por **[csharp-5-0-overview.md](MindSetCSharp5_0.Console/Docs/csharp-5-0-overview.md)**); em **7.0**, cópia com guias até **5.0** mais guias **7.0** (comece por **[csharp-7-0-overview.md](MindSetCSharp7_0.Console/Docs/csharp-7-0-overview.md)**) — **sem** projeto MindSet **6.0**; em **7.1**, a mesma cópia de fundação mais guias **7.1** (comece por **[csharp-7-1-overview.md](MindSetCSharp7_1.Console/Docs/csharp-7-1-overview.md)**); em **7.2**, cópia com guias **7.1**/**7.0**/… mais guias **7.2** (comece por **[csharp-7-2-overview.md](MindSetCSharp7_2.Console/Docs/csharp-7-2-overview.md)**); em **7.3**, cópia com guias **7.2**/… mais guias **7.3** (comece por **[csharp-7-3-overview.md](MindSetCSharp7_3.Console/Docs/csharp-7-3-overview.md)**); em **8.0**, cópia com guias **7.x**/… mais guias **8.0** (comece por **[csharp-8-0-overview.md](MindSetCSharp8_0.Console/Docs/csharp-8-0-overview.md)**) — **.NET Core 3.0**; em **9.0**, cópia com guias **8.0**/… mais guias **9.0** (comece por **[csharp-9-0-overview.md](MindSetCSharp9_0.Console/Docs/csharp-9-0-overview.md)**) — **.NET 5**; em **10.0**, cópia com guias **9.0**/… mais guias **10.0** (comece por **[csharp-10-0-overview.md](MindSetCSharp10_0.Console/Docs/csharp-10-0-overview.md)**) — **.NET 6**.
+Cada projeto tem **`Docs/`**: em **1.0**, roteiro só da base inicial; em **1.2**, o mesmo conjunto de tópicos (cópia local) mais **[csharp-1-2-enhancements.md](MindSetCSharp1_2.Console/Docs/csharp-1-2-enhancements.md)** sobre **foreach** e **`Dispose`** no enumerador; em **2.0**, base 1.0 em cópia local mais guias dedicados (comece por **[csharp-2-0-overview.md](MindSetCSharp2_0.Console/Docs/csharp-2-0-overview.md)**); em **3.0**, cópia com guias 2.0 + base 1.0 mais guias **3.0** (comece por **[csharp-3-0-overview.md](MindSetCSharp3_0.Console/Docs/csharp-3-0-overview.md)**); em **4.0**, cópia com guias anteriores mais guias **4.0** (comece por **[csharp-4-0-overview.md](MindSetCSharp4_0.Console/Docs/csharp-4-0-overview.md)**); em **5.0**, cópia com guias anteriores mais guias **5.0** (comece por **[csharp-5-0-overview.md](MindSetCSharp5_0.Console/Docs/csharp-5-0-overview.md)**); em **7.0**, cópia com guias até **5.0** mais guias **7.0** (comece por **[csharp-7-0-overview.md](MindSetCSharp7_0.Console/Docs/csharp-7-0-overview.md)**) — **sem** projeto MindSet **6.0**; em **7.1**, a mesma cópia de fundação mais guias **7.1** (comece por **[csharp-7-1-overview.md](MindSetCSharp7_1.Console/Docs/csharp-7-1-overview.md)**); em **7.2**, cópia com guias **7.1**/**7.0**/… mais guias **7.2** (comece por **[csharp-7-2-overview.md](MindSetCSharp7_2.Console/Docs/csharp-7-2-overview.md)**); em **7.3**, cópia com guias **7.2**/… mais guias **7.3** (comece por **[csharp-7-3-overview.md](MindSetCSharp7_3.Console/Docs/csharp-7-3-overview.md)**); em **8.0**, cópia com guias **7.x**/… mais guias **8.0** (comece por **[csharp-8-0-overview.md](MindSetCSharp8_0.Console/Docs/csharp-8-0-overview.md)**) — **.NET Core 3.0**; em **9.0**, cópia com guias **8.0**/… mais guias **9.0** (comece por **[csharp-9-0-overview.md](MindSetCSharp9_0.Console/Docs/csharp-9-0-overview.md)**) — **.NET 5**; em **10.0**, cópia com guias **9.0**/… mais guias **10.0** (comece por **[csharp-10-0-overview.md](MindSetCSharp10_0.Console/Docs/csharp-10-0-overview.md)**) — **.NET 6**; em **11.0**, cópia com guias **10.0**/… mais guias **11.0** (comece por **[csharp-11-0-overview.md](MindSetCSharp11_0.Console/Docs/csharp-11-0-overview.md)**) — **.NET 7**, com **`LangVersion` 11** no `.csproj`; em **12.0**, cópia com guias **11.0**/… mais guias **12.0** (comece por **[csharp-12-0-overview.md](MindSetCSharp12_0.Console/Docs/csharp-12-0-overview.md)**) — **.NET 8**, com **`LangVersion` 12** no `.csproj`; em **13.0**, cópia com guias **12.0**/… mais guias **13.0** (comece por **[csharp-13-0-overview.md](MindSetCSharp13_0.Console/Docs/csharp-13-0-overview.md)**) — **.NET 9**, com **`LangVersion` 13** no `.csproj`; em **14.0**, cópia com guias **13.0**/… mais guias **14.0** (comece por **[csharp-14-0-overview.md](MindSetCSharp14_0.Console/Docs/csharp-14-0-overview.md)**) — **.NET 10**, com **`LangVersion` 14** no `.csproj`; em **15.0**, cópia com guias **14.0**/… mais guias **15.0** (comece por **[csharp-15-0-overview.md](MindSetCSharp15_0.Console/Docs/csharp-15-0-overview.md)**) — **.NET 11** (preview), com **`LangVersion` `preview`** ou **`15`** no `.csproj` conforme o SDK.
 
 Leia os **README** de cada `Docs/`, **[FORMATO_DO_PROJETO.md](FORMATO_DO_PROJETO.md)** e **[DOCUMENTATION_INDEX.md](DOCUMENTATION_INDEX.md)**.
 
@@ -121,7 +126,22 @@ MindSetCSharp/
 ├── MindSetCSharp9_0.Console/
 │   ├── Program.cs
 │   └── Docs/
-└── MindSetCSharp10_0.Console/
+├── MindSetCSharp10_0.Console/
+│   ├── Program.cs
+│   └── Docs/
+├── MindSetCSharp11_0.Console/
+│   ├── Program.cs
+│   └── Docs/
+├── MindSetCSharp12_0.Console/
+│   ├── Program.cs
+│   └── Docs/
+├── MindSetCSharp13_0.Console/
+│   ├── Program.cs
+│   └── Docs/
+├── MindSetCSharp14_0.Console/
+│   ├── Program.cs
+│   └── Docs/
+└── MindSetCSharp15_0.Console/
     ├── Program.cs
     └── Docs/
 ```
@@ -161,6 +181,11 @@ dotnet run --project MindSetCSharp7_3.Console
 dotnet run --project MindSetCSharp8_0.Console
 dotnet run --project MindSetCSharp9_0.Console
 dotnet run --project MindSetCSharp10_0.Console
+dotnet run --project MindSetCSharp11_0.Console
+dotnet run --project MindSetCSharp12_0.Console
+dotnet run --project MindSetCSharp13_0.Console
+dotnet run --project MindSetCSharp14_0.Console
+dotnet run --project MindSetCSharp15_0.Console
 ```
 
 Release (`dotnet build -c Release`) segue o mesmo padrão.
@@ -182,6 +207,11 @@ Release (`dotnet build -c Release`) segue o mesmo padrão.
 - **C# 8.0:** [MindSetCSharp8_0.Console/Docs/README.md](MindSetCSharp8_0.Console/Docs/README.md) — membros `readonly`, default interface members, pattern matching (switch expressions, property/tuple/positional patterns), `using` declarations, funções locais `static`, nullable reference types, `IAsyncEnumerable`, índices e intervalos, `??=`, … *(setembro 2019 / .NET Core 3.0)*.
 - **C# 9.0:** [MindSetCSharp9_0.Console/Docs/README.md](MindSetCSharp9_0.Console/Docs/README.md) — *records*, `init`, top-level statements, patterns relacionais e lógicos, `nint`/`nuint`, function pointers, module initializers, `new()` / `?:` com tipo alvo, retornos covariantes, … *(novembro 2020 / .NET 5)*.
 - **C# 10.0:** [MindSetCSharp10_0.Console/Docs/README.md](MindSetCSharp10_0.Console/Docs/README.md) — *record structs*, `global using`, *handlers* de interpolação, `namespace` por ficheiro, lambdas melhoradas, `[CallerArgumentExpression]`, … *(novembro 2021 / .NET 6)*.
+- **C# 11.0:** [MindSetCSharp11_0.Console/Docs/README.md](MindSetCSharp11_0.Console/Docs/README.md) — *raw strings*, matemática genérica, UTF-8 `u8`, *list patterns*, tipos `file`, `required`, `ref fields` / `scoped`, … *(novembro 2022 / .NET 7)*.
+- **C# 12.0:** [MindSetCSharp12_0.Console/Docs/README.md](MindSetCSharp12_0.Console/Docs/README.md) — construtores primários, expressões de coleção, *inline arrays*, lambdas com parâmetros opcionais, `ref readonly`, alias `using` para qualquer tipo, `Experimental`, *interceptors* (pré-visualização), … *(novembro 2023 / .NET 8)*.
+- **C# 13.0:** [MindSetCSharp13_0.Console/Docs/README.md](MindSetCSharp13_0.Console/Docs/README.md) — `params` em coleções, `System.Threading.Lock`, `\e`, `ref struct` com interfaces e argumentos de tipo, partial properties/indexers, prioridade de overload, … *(novembro 2024 / .NET 9)*.
+- **C# 14.0:** [MindSetCSharp14_0.Console/Docs/README.md](MindSetCSharp14_0.Console/Docs/README.md) — *extension members*, atribuição null-condicional, `nameof` com genéricos não ligados, conversões implícitas `Span`/`ReadOnlySpan`, modificadores em lambdas, propriedades com `field`, partial events/constructors, atribuição composta definida pelo utilizador, … *(novembro 2025 / .NET 10)*.
+- **C# 15.0:** [MindSetCSharp15_0.Console/Docs/README.md](MindSetCSharp15_0.Console/Docs/README.md) — argumentos em expressões de coleção (`with(...)`), **.NET 11** (SDK preview / VS 2026 Insiders), …
 
 ---
 

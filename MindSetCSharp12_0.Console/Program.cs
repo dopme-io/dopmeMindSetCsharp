@@ -1,0 +1,11 @@
+Console.WriteLine("=== MindSet C# 12.0 (console) ===");
+Console.WriteLine();
+Console.WriteLine("C# 12.0 — novembro de 2023; alinhado a .NET 8 e cadência anual de releases.");
+Console.WriteLine("Destaques: construtores primários, expressões de coleção, inline arrays,");
+Console.WriteLine("parâmetros opcionais em lambdas, ref readonly, alias de qualquer tipo, Experimental, …");
+Console.WriteLine();
+Console.WriteLine("Roteiro: MindSetCSharp12_0.Console/Docs/README.md");
+Console.WriteLine("Comece por: Docs/csharp-12-0-overview.md");
+Console.WriteLine();
+Console.WriteLine("Prática: dotnet run --project MindSetCSharp12_0.Console");
+Console.WriteLine();

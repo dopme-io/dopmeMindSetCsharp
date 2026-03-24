@@ -1,0 +1,10 @@
+Console.WriteLine("=== MindSet C# 15.0 (console) ===");
+Console.WriteLine();
+Console.WriteLine("C# 15.0 — alinhado a .NET 11 (pré-visualização SDK / VS 2026 Insiders).");
+Console.WriteLine("Destaque: argumentos em expressões de coleção — elemento with(...) no início.");
+Console.WriteLine();
+Console.WriteLine("Roteiro: MindSetCSharp15_0.Console/Docs/README.md");
+Console.WriteLine("Comece por: Docs/csharp-15-0-overview.md");
+Console.WriteLine();
+Console.WriteLine("Prática: dotnet run --project MindSetCSharp15_0.Console");
+Console.WriteLine();

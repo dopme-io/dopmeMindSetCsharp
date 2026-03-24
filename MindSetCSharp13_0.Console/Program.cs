@@ -1,0 +1,11 @@
+Console.WriteLine("=== MindSet C# 13.0 (console) ===");
+Console.WriteLine();
+Console.WriteLine("C# 13.0 — novembro de 2024; alinhado a .NET 9 e cadência anual de releases.");
+Console.WriteLine("Destaques: params em coleções, System.Threading.Lock, escape \\e, ref struct + interfaces,");
+Console.WriteLine("partial properties/indexers, prioridade de overload, …");
+Console.WriteLine();
+Console.WriteLine("Roteiro: MindSetCSharp13_0.Console/Docs/README.md");
+Console.WriteLine("Comece por: Docs/csharp-13-0-overview.md");
+Console.WriteLine();
+Console.WriteLine("Prática: dotnet run --project MindSetCSharp13_0.Console");
+Console.WriteLine();

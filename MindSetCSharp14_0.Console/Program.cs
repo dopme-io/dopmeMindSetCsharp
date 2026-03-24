@@ -1,0 +1,11 @@
+Console.WriteLine("=== MindSet C# 14.0 (console) ===");
+Console.WriteLine();
+Console.WriteLine("C# 14.0 — novembro de 2025; alinhado a .NET 10 e cadência anual de releases.");
+Console.WriteLine("Destaques: extension members, atribuição null-condicional, nameof em genéricos");
+Console.WriteLine("não ligados, conversões implícitas Span, modificadores em lambdas, …");
+Console.WriteLine();
+Console.WriteLine("Roteiro: MindSetCSharp14_0.Console/Docs/README.md");
+Console.WriteLine("Comece por: Docs/csharp-14-0-overview.md");
+Console.WriteLine();
+Console.WriteLine("Prática: dotnet run --project MindSetCSharp14_0.Console");
+Console.WriteLine();

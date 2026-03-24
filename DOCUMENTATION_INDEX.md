@@ -135,6 +135,56 @@
 | *Record structs*, `global using`, *handlers* de interpolação, lambdas, `[CallerArgumentExpression]`, … | [MindSetCSharp10_0.Console/Docs/](MindSetCSharp10_0.Console/Docs/) — ver tabela no README da edição 10.0 |
 | Guias 9.0 / … (cópia local) | mesma pasta — ver README da edição 10.0 |
 
+## Roteiro C# 11.0 (.NET 7, novembro 2022)
+
+**Índice:** [MindSetCSharp11_0.Console/Docs/README.md](MindSetCSharp11_0.Console/Docs/README.md)
+
+| Tópico | Ficheiro |
+|--------|----------|
+| Visão geral 11.0 | [csharp-11-0-overview.md](MindSetCSharp11_0.Console/Docs/csharp-11-0-overview.md) |
+| *Raw strings*, matemática genérica, UTF-8 `u8`, *list patterns*, `file`, `required`, `ref fields` / `scoped`, … | [MindSetCSharp11_0.Console/Docs/](MindSetCSharp11_0.Console/Docs/) — ver tabela no README da edição 11.0 |
+| Guias 10.0 / … (cópia local) | mesma pasta — ver README da edição 11.0 |
+
+## Roteiro C# 12.0 (.NET 8, novembro 2023)
+
+**Índice:** [MindSetCSharp12_0.Console/Docs/README.md](MindSetCSharp12_0.Console/Docs/README.md)
+
+| Tópico | Ficheiro |
+|--------|----------|
+| Visão geral 12.0 | [csharp-12-0-overview.md](MindSetCSharp12_0.Console/Docs/csharp-12-0-overview.md) |
+| Construtores primários, expressões de coleção, *inline arrays*, lambdas com defaults, `ref readonly`, alias `using`, `Experimental`, *interceptors* (pré-visualização), … | [MindSetCSharp12_0.Console/Docs/](MindSetCSharp12_0.Console/Docs/) — ver tabela no README da edição 12.0 |
+| Guias 11.0 / … (cópia local) | mesma pasta — ver README da edição 12.0 |
+
+## Roteiro C# 13.0 (.NET 9, novembro 2024)
+
+**Índice:** [MindSetCSharp13_0.Console/Docs/README.md](MindSetCSharp13_0.Console/Docs/README.md)
+
+| Tópico | Ficheiro |
+|--------|----------|
+| Visão geral 13.0 | [csharp-13-0-overview.md](MindSetCSharp13_0.Console/Docs/csharp-13-0-overview.md) |
+| `params` em coleções, `System.Threading.Lock`, `\e`, `ref struct`/interfaces/genéricos, partial properties/indexers, prioridade de overload, … | [MindSetCSharp13_0.Console/Docs/](MindSetCSharp13_0.Console/Docs/) — ver tabela no README da edição 13.0 |
+| Guias 12.0 / … (cópia local) | mesma pasta — ver README da edição 13.0 |
+
+## Roteiro C# 14.0 (.NET 10, novembro 2025)
+
+**Índice:** [MindSetCSharp14_0.Console/Docs/README.md](MindSetCSharp14_0.Console/Docs/README.md)
+
+| Tópico | Ficheiro |
+|--------|----------|
+| Visão geral 14.0 | [csharp-14-0-overview.md](MindSetCSharp14_0.Console/Docs/csharp-14-0-overview.md) |
+| *Extension members*, null-condicional, `nameof` unbound, `Span`/`ReadOnlySpan`, lambdas com modificadores, `field`, partial events/constructors, `+=` definido pelo utilizador, … | [MindSetCSharp14_0.Console/Docs/](MindSetCSharp14_0.Console/Docs/) — ver tabela no README da edição 14.0 |
+| Guias 13.0 / … (cópia local) | mesma pasta — ver README da edição 14.0 |
+
+## Roteiro C# 15.0 (.NET 11, pré-visualização)
+
+**Índice:** [MindSetCSharp15_0.Console/Docs/README.md](MindSetCSharp15_0.Console/Docs/README.md)
+
+| Tópico | Ficheiro |
+|--------|----------|
+| Visão geral 15.0 | [csharp-15-0-overview.md](MindSetCSharp15_0.Console/Docs/csharp-15-0-overview.md) |
+| Argumentos em expressões de coleção (`with(...)`), tooling SDK/VS, feedback Roslyn, … | [MindSetCSharp15_0.Console/Docs/](MindSetCSharp15_0.Console/Docs/) — ver tabela no README da edição 15.0 |
+| Guias 14.0 / … (cópia local) | mesma pasta — ver README da edição 15.0 |
+
 ## Documentos na raiz
 
 | Documento | Uso |
@@ -187,7 +237,22 @@ MindSetCSharp/
 ├── MindSetCSharp9_0.Console/
 │   ├── Program.cs
 │   └── Docs/
-└── MindSetCSharp10_0.Console/
+├── MindSetCSharp10_0.Console/
+│   ├── Program.cs
+│   └── Docs/
+├── MindSetCSharp11_0.Console/
+│   ├── Program.cs
+│   └── Docs/
+├── MindSetCSharp12_0.Console/
+│   ├── Program.cs
+│   └── Docs/
+├── MindSetCSharp13_0.Console/
+│   ├── Program.cs
+│   └── Docs/
+├── MindSetCSharp14_0.Console/
+│   ├── Program.cs
+│   └── Docs/
+└── MindSetCSharp15_0.Console/
     ├── Program.cs
     └── Docs/
 ```
