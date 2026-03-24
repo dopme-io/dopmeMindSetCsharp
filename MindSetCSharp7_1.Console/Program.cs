@@ -1,0 +1,11 @@
+Console.WriteLine("=== MindSet C# 7.1 (console) ===");
+Console.WriteLine();
+Console.WriteLine("C# 7.1 — agosto de 2017; primeira versão com lançamentos pontuais (7.1, 7.2, …).");
+Console.WriteLine("Destaques: async Main, literal default, nomes de tuplo inferidos,");
+Console.WriteLine("pattern matching em parâmetros de tipo genérico, LangVersion, -refout / -refonly.");
+Console.WriteLine();
+Console.WriteLine("Roteiro: MindSetCSharp7_1.Console/Docs/README.md");
+Console.WriteLine("Comece por: Docs/csharp-7-1-overview.md");
+Console.WriteLine();
+Console.WriteLine("Prática: dotnet run --project MindSetCSharp7_1.Console");
+Console.WriteLine();

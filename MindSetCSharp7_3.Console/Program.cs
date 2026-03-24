@@ -1,0 +1,11 @@
+Console.WriteLine("=== MindSet C# 7.3 (console) ===");
+Console.WriteLine();
+Console.WriteLine("C# 7.3 — maio de 2018; código seguro mais performante, tuplos ==");
+Console.WriteLine("restrição unmanaged, atributos no backing field, resolução de overload,");
+Console.WriteLine("-publicsign / -pathmap, …");
+Console.WriteLine();
+Console.WriteLine("Roteiro: MindSetCSharp7_3.Console/Docs/README.md");
+Console.WriteLine("Comece por: Docs/csharp-7-3-overview.md");
+Console.WriteLine();
+Console.WriteLine("Prática: dotnet run --project MindSetCSharp7_3.Console");
+Console.WriteLine();

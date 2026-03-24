@@ -1,0 +1,10 @@
+Console.WriteLine("=== MindSet C# 1.2 (console) ===");
+Console.WriteLine();
+Console.WriteLine("Este projeto acompanha a base de C# 1.0 e as pequenas melhorias de C# 1.2 (abril 2003, Visual Studio .NET 2003).");
+Console.WriteLine("Roteiro: pasta Docs/ deste projeto (comece por Docs/README.md).");
+Console.WriteLine();
+Console.WriteLine("Destaque C# 1.2: foreach passou a chamar Dispose() em IEnumerator que implementa IDisposable.");
+Console.WriteLine("Documento dedicado: Docs/csharp-1-2-enhancements.md");
+Console.WriteLine();
+Console.WriteLine("Copie exemplos para este projeto e execute: dotnet run --project MindSetCSharp1_2.Console");
+Console.WriteLine();

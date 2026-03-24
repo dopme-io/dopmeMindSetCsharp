@@ -1,0 +1,10 @@
+Console.WriteLine("=== MindSet C# 7.2 (console) ===");
+Console.WriteLine();
+Console.WriteLine("C# 7.2 — novembro de 2017; melhorias pequenas mas úteis em ref/in, structs,");
+Console.WriteLine("stackalloc, fixed, argumentos nomeados, literais, private protected, ref condicional.");
+Console.WriteLine();
+Console.WriteLine("Roteiro: MindSetCSharp7_2.Console/Docs/README.md");
+Console.WriteLine("Comece por: Docs/csharp-7-2-overview.md");
+Console.WriteLine();
+Console.WriteLine("Prática: dotnet run --project MindSetCSharp7_2.Console");
+Console.WriteLine();

@@ -1,0 +1,11 @@
+Console.WriteLine("=== MindSet C# 4.0 (console) ===");
+Console.WriteLine();
+Console.WriteLine("C# 4.0 — abril de 2010, Visual Studio 2010, .NET Framework 4.");
+Console.WriteLine("Destaques: dynamic (DLR), argumentos nomeados/opcionais, variança out/in");
+Console.WriteLine("em interfaces genéricas, interop COM com tipos incorporados (NoPIA), …");
+Console.WriteLine();
+Console.WriteLine("Roteiro: MindSetCSharp4_0.Console/Docs/README.md");
+Console.WriteLine("Comece por: Docs/csharp-4-0-overview.md");
+Console.WriteLine();
+Console.WriteLine("Prática: dotnet run --project MindSetCSharp4_0.Console");
+Console.WriteLine();

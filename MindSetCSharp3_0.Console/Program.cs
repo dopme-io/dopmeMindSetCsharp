@@ -1,0 +1,11 @@
+Console.WriteLine("=== MindSet C# 3.0 (console) ===");
+Console.WriteLine();
+Console.WriteLine("C# 3.0 — final de 2007, Visual Studio 2008; conjunto completo de funcionalidades");
+Console.WriteLine("com .NET Framework 3.5. Destaques: LINQ (expressões de consulta), lambdas,");
+Console.WriteLine("extension methods, var, inicializadores, auto-properties, expression trees, …");
+Console.WriteLine();
+Console.WriteLine("Roteiro: MindSetCSharp3_0.Console/Docs/README.md");
+Console.WriteLine("Comece por: Docs/csharp-3-0-overview.md");
+Console.WriteLine();
+Console.WriteLine("Prática: dotnet run --project MindSetCSharp3_0.Console");
+Console.WriteLine();

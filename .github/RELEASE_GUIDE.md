@@ -11,12 +11,13 @@ Este guia explica como criar releases automatizadas para o projeto MindSetCSharp
 Este workflow é executado automaticamente quando você cria e envia uma tag de versão para o repositório.
 
 **O que faz:**
-- Faz build do projeto
-- Executa testes
-- Publica o aplicativo console para múltiplas plataformas (Windows, Linux, macOS)
-- Cria arquivos ZIP com os executáveis
-- Gera changelog automático
-- Cria uma release no GitHub com os artefatos
+- Restaura e compila a solução `MindSetCSharp.sln`
+- **Deteta automaticamente** todos os `.csproj` com `<OutputType>Exe</OutputType>` (cada projeto console / nova edição na solução)
+- Publica cada um como **self-contained** para `win-x64`, `linux-x64`, `osx-x64` e `osx-arm64`
+- Gera um ZIP por projeto e por RID (`MindSetCSharp-<PastaDoProjeto>-v<versão>-<rid>.zip`)
+- Gera changelog e cria a release no GitHub
+
+**Nota:** Este workflow **não** corre quando a tag foi enviada pelo workflow *Manual Release* (`github-actions[bot]`), para evitar release duplicado. Tags criadas por si (push local ou UI) disparam este fluxo normalmente.
 
 ### 2. Manual Release Workflow (`manual-release.yml`)
 
@@ -33,30 +34,18 @@ Este workflow permite criar releases de forma manual através da interface do Gi
 6. Clique em `Run workflow`
 
 **O que faz:**
-- Valida o formato da versão
-- Verifica se a tag já existe
-- Faz build e testes
-- Publica para múltiplas plataformas (incluindo macOS ARM64)
-- Cria e envia a tag automaticamente
-- Cria a release com changelog
+- Valida o formato da versão e se a tag ainda não existe
+- Restaura, compila e publica **todos** os projetos console (mesma deteção que `release.yml`)
+- Gera ZIPs self-contained (Windows, Linux, macOS Intel e Apple Silicon)
+- Cria e envia a tag `vX.Y.Z` e publica a **release** com os artefactos (evita duplicar com `release.yml` graças ao filtro de actor no outro workflow)
 
-### 3. Create Version Tags Workflow (`create-tags.yml`)
+### 3. Create Version Tag (`create-tags.yml`)
 
-**Trigger:** Executado manualmente através do GitHub Actions
+**Trigger:** Manual (`workflow_dispatch`)
 
-Este workflow facilita a criação de tags para as versões 1.0.0 e 2.0.0.
+Cria **apenas** uma tag `vX.Y.Z` no commit atual (input: versão `1.0.0`). **Não** gera ZIPs nem release — use quando quiser só marcar o histórico, ou faça push da tag **a partir do seu ambiente** para disparar o `release.yml` com o seu utilizador.
 
-**Como usar:**
-1. Vá para `Actions` no GitHub
-2. Selecione `Create Version Tags`
-3. Clique em `Run workflow`
-4. Marque as versões que deseja criar (v1.0.0 e/ou v2.0.0)
-5. Clique em `Run workflow`
-
-**O que faz:**
-- Cria as tags selecionadas
-- Envia as tags para o repositório
-- Automaticamente dispara o workflow de release
+**Como usar:** Actions → *Create Version Tag* → Run workflow → indique `X.Y.Z`.
 
 ## Como Criar Releases
 
@@ -77,12 +66,12 @@ git push origin v1.0.0
 3. Preencha a versão desejada
 4. Execute
 
-### Método 3: Usando o Workflow de Tags
+### Método 3: Apenas criar tag (sem artefactos)
 
-1. Acesse: `https://github.com/dopme-io/UseMindCSharp/actions/workflows/create-tags.yml`
-2. Clique em `Run workflow`
-3. Selecione as versões que deseja criar
-4. Execute
+1. Acesse o workflow `create-tags.yml` em Actions
+2. Indique a versão `X.Y.Z` e execute
+
+Para release com ZIPs, prefira o **Método 1** (push de tag pelo seu utilizador) ou o **Método 2** (*Manual Release*).
 
 ## Estrutura de Versão
 
@@ -130,7 +119,6 @@ git push origin :refs/tags/v1.0.0
 2. Teste localmente:
 ```bash
 dotnet build --configuration Release
-dotnet test --configuration Release
 ```
 
 ### Workflow não disparou

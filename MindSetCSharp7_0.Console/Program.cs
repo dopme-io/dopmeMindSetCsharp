@@ -1,0 +1,11 @@
+Console.WriteLine("=== MindSet C# 7.0 (console) ===");
+Console.WriteLine();
+Console.WriteLine("C# 7.0 — março de 2017, Visual Studio 2017.");
+Console.WriteLine("Destaques: out var, tuplos e desconstrução, pattern matching, funções locais,");
+Console.WriteLine("ref locals/returns, discards, literais binários, throw expression, …");
+Console.WriteLine();
+Console.WriteLine("Roteiro: MindSetCSharp7_0.Console/Docs/README.md");
+Console.WriteLine("Comece por: Docs/csharp-7-0-overview.md");
+Console.WriteLine();
+Console.WriteLine("Prática: dotnet run --project MindSetCSharp7_0.Console");
+Console.WriteLine();

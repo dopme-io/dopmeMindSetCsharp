@@ -1,0 +1,11 @@
+Console.WriteLine("=== MindSet C# 2.0 (console) ===");
+Console.WriteLine();
+Console.WriteLine("C# 2.0 — novembro de 2005, Visual Studio 2005.");
+Console.WriteLine("Destaques: genéricos, tipos parciais, métodos anónimos, nullable, iteradores,");
+Console.WriteLine("variação em delegados, classes estáticas, inferência de delegados, …");
+Console.WriteLine();
+Console.WriteLine("Roteiro: MindSetCSharp2_0.Console/Docs/README.md");
+Console.WriteLine("Comece por: Docs/csharp-2-0-overview.md");
+Console.WriteLine();
+Console.WriteLine("Prática: dotnet run --project MindSetCSharp2_0.Console");
+Console.WriteLine();

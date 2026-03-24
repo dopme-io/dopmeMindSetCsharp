@@ -1,199 +1,75 @@
-# MindSetCSharp - Documentação do Projeto
+# MindSetCSharp — Documentação do projeto
 
-## Visão Geral
+## Visão geral
 
-Projeto educacional completo em .NET 10 que explora fundamentos e conceitos avançados de C# através de uma abordagem prática e modular.
+Solução .NET 10 com **projetos console** por edição. Cada edição inclui **`Program.cs`** e **`Docs/`** com roteiros em Markdown.
 
-## Arquitetura da Solução
+## Onde está o conteúdo pedagógico
 
-### Estrutura de Projetos
+| Edição | Índice | Conteúdo |
+|--------|--------|-----------|
+| **C# 1.0** (2002) | [MindSetCSharp1_0.Console/Docs/README.md](MindSetCSharp1_0.Console/Docs/README.md) | Nove tópicos base (classes … atributos) |
+| **C# 1.2** (2003) | [MindSetCSharp1_2.Console/Docs/README.md](MindSetCSharp1_2.Console/Docs/README.md) | [csharp-1-2-enhancements.md](MindSetCSharp1_2.Console/Docs/csharp-1-2-enhancements.md) + mesmos tópicos base em cópia local |
+| **C# 2.0** (2005) | [MindSetCSharp2_0.Console/Docs/README.md](MindSetCSharp2_0.Console/Docs/README.md) | [csharp-2-0-overview.md](MindSetCSharp2_0.Console/Docs/csharp-2-0-overview.md) + guias 2.0 + base 1.0 em cópia local |
+| **C# 3.0** (2007) | [MindSetCSharp3_0.Console/Docs/README.md](MindSetCSharp3_0.Console/Docs/README.md) | [csharp-3-0-overview.md](MindSetCSharp3_0.Console/Docs/csharp-3-0-overview.md) + guias 3.0 + guias 2.0 + base 1.0 em cópia local |
+| **C# 4.0** (2010) | [MindSetCSharp4_0.Console/Docs/README.md](MindSetCSharp4_0.Console/Docs/README.md) | [csharp-4-0-overview.md](MindSetCSharp4_0.Console/Docs/csharp-4-0-overview.md) + guias 4.0 + guias 3.0/2.0 + base 1.0 em cópia local |
+| **C# 5.0** (2012) | [MindSetCSharp5_0.Console/Docs/README.md](MindSetCSharp5_0.Console/Docs/README.md) | [csharp-5-0-overview.md](MindSetCSharp5_0.Console/Docs/csharp-5-0-overview.md) + guias 5.0 + guias anteriores em cópia local |
+| **C# 7.0** (2017) | [MindSetCSharp7_0.Console/Docs/README.md](MindSetCSharp7_0.Console/Docs/README.md) | [csharp-7-0-overview.md](MindSetCSharp7_0.Console/Docs/csharp-7-0-overview.md) + guias 7.0 + guias anteriores em cópia local *(sem projeto MindSet 6.0)* |
+| **C# 7.1** (2017) | [MindSetCSharp7_1.Console/Docs/README.md](MindSetCSharp7_1.Console/Docs/README.md) | [csharp-7-1-overview.md](MindSetCSharp7_1.Console/Docs/csharp-7-1-overview.md) + guias 7.1 + guias 7.0 e anteriores em cópia local |
+| **C# 7.2** (2017) | [MindSetCSharp7_2.Console/Docs/README.md](MindSetCSharp7_2.Console/Docs/README.md) | [csharp-7-2-overview.md](MindSetCSharp7_2.Console/Docs/csharp-7-2-overview.md) + guias 7.2 + guias anteriores em cópia local |
+| **C# 7.3** (2018) | [MindSetCSharp7_3.Console/Docs/README.md](MindSetCSharp7_3.Console/Docs/README.md) | [csharp-7-3-overview.md](MindSetCSharp7_3.Console/Docs/csharp-7-3-overview.md) + guias 7.3 + guias anteriores em cópia local |
+| **C# 8.0** (2019) | [MindSetCSharp8_0.Console/Docs/README.md](MindSetCSharp8_0.Console/Docs/README.md) | [csharp-8-0-overview.md](MindSetCSharp8_0.Console/Docs/csharp-8-0-overview.md) + guias 8.0 + guias anteriores em cópia local |
+| **C# 9.0** (2020) | [MindSetCSharp9_0.Console/Docs/README.md](MindSetCSharp9_0.Console/Docs/README.md) | [csharp-9-0-overview.md](MindSetCSharp9_0.Console/Docs/csharp-9-0-overview.md) + guias 9.0 + guias anteriores em cópia local |
+| **C# 10.0** (2021) | [MindSetCSharp10_0.Console/Docs/README.md](MindSetCSharp10_0.Console/Docs/README.md) | [csharp-10-0-overview.md](MindSetCSharp10_0.Console/Docs/csharp-10-0-overview.md) + guias 10.0 + guias anteriores em cópia local |
 
-**MindSetCSharp.sln** - Solução principal contendo:
+## Solução
 
-1. **MindSetCSharp.Core** (Class Library)
-   - Biblioteca de classes com todos os módulos educacionais
-   - Target Framework: net10.0
-   - Organizada em 19 módulos temáticos
+| Projeto | Função |
+|---------|--------|
+| `MindSetCSharp1_0.Console` | MindSet C# 1.0 + `Docs/` |
+| `MindSetCSharp1_2.Console` | MindSet C# 1.2 + `Docs/` |
+| `MindSetCSharp2_0.Console` | MindSet C# 2.0 + `Docs/` |
+| `MindSetCSharp3_0.Console` | MindSet C# 3.0 + `Docs/` |
+| `MindSetCSharp4_0.Console` | MindSet C# 4.0 + `Docs/` |
+| `MindSetCSharp5_0.Console` | MindSet C# 5.0 + `Docs/` |
+| `MindSetCSharp7_0.Console` | MindSet C# 7.0 + `Docs/` |
+| `MindSetCSharp7_1.Console` | MindSet C# 7.1 + `Docs/` |
+| `MindSetCSharp7_2.Console` | MindSet C# 7.2 + `Docs/` |
+| `MindSetCSharp7_3.Console` | MindSet C# 7.3 + `Docs/` |
+| `MindSetCSharp8_0.Console` | MindSet C# 8.0 + `Docs/` |
+| `MindSetCSharp9_0.Console` | MindSet C# 9.0 + `Docs/` |
+| `MindSetCSharp10_0.Console` | MindSet C# 10.0 + `Docs/` |
 
-2. **MindSetCSharp.Console** (Console App)
-   - Aplicação demonstrativa
-   - Referencia MindSetCSharp.Core
-   - Entry point para executar todos os módulos
-
-## Módulos Implementados
-
-| Módulo | Namespace | Descrição |
-|--------|-----------|-----------|
-| Produtivo | `MindSetCSharp.Core.Produtivo` | Técnicas de produtividade |
-| Bastidores | `MindSetCSharp.Core.Bastidores` | Internos da execução .NET |
-| Objetos | `MindSetCSharp.Core.Objetos` | Fundamentos de POO |
-| Tipos | `MindSetCSharp.Core.Tipos` | Tipos de dados em C# |
-| Referências | `MindSetCSharp.Core.Referencias` | Trabalho com referências |
-| Encapsulamento | `MindSetCSharp.Core.Encapsulamento` | Princípios de encapsulamento |
-| Herança | `MindSetCSharp.Core.Heranca` | Conceitos de herança |
-| Interface | `MindSetCSharp.Core.Interface` | Uso de interfaces |
-| Classes | `MindSetCSharp.Core.Classes` | Criação e uso de classes |
-| Enumerações | `MindSetCSharp.Core.Enumeracoes` | Definição e uso de enums |
-| Coleções | `MindSetCSharp.Core.Colecoes` | Arrays, listas, dicionários |
-| Arquivos | `MindSetCSharp.Core.Arquivos` | Manipulação de arquivos |
-| Exceções | `MindSetCSharp.Core.Excecoes` | Tratamento de exceções |
-| Eventos | `MindSetCSharp.Core.Eventos` | Sistema de eventos |
-| Delegates | `MindSetCSharp.Core.Delegates` | Uso de delegados |
-| Revisão | `MindSetCSharp.Core.Revisao` | Exercícios e desafios |
-| Controles | `MindSetCSharp.Core.Controles` | Controles de interface |
-| Gráficos | `MindSetCSharp.Core.Graficos` | Criação de gráficos |
-| LINQ | `MindSetCSharp.Core.LINQ` | Language Integrated Query |
-
-## Como Usar
-
-### Pré-requisitos
+## Comandos
 
 ```powershell
-# Verificar versão do .NET
-dotnet --version
-# Deve retornar 10.0.x ou superior
-```
-
-### Comandos Principais
-
-```powershell
-# Compilar toda a solução
-dotnet build
-
-# Executar aplicação console
-dotnet run --project MindSetCSharp.Console
-
-# Limpar artefatos de build
-dotnet clean
-
-# Restaurar dependências
 dotnet restore
+dotnet build
+dotnet run --project MindSetCSharp1_0.Console
+dotnet run --project MindSetCSharp1_2.Console
+dotnet run --project MindSetCSharp2_0.Console
+dotnet run --project MindSetCSharp3_0.Console
+dotnet run --project MindSetCSharp4_0.Console
+dotnet run --project MindSetCSharp5_0.Console
+dotnet run --project MindSetCSharp7_0.Console
+dotnet run --project MindSetCSharp7_1.Console
+dotnet run --project MindSetCSharp7_2.Console
+dotnet run --project MindSetCSharp7_3.Console
+dotnet run --project MindSetCSharp8_0.Console
+dotnet run --project MindSetCSharp9_0.Console
+dotnet run --project MindSetCSharp10_0.Console
 ```
 
-### Estrutura de Arquivos
+## Estender o roteiro
 
-```
-MindSetCSharp/
-│
-├── MindSetCSharp.sln                    # Solução principal
-│
-├── MindSetCSharp.Console/
-│   ├── Program.cs                       # Entry point da aplicação
-│   └── MindSetCSharp.Console.csproj     # Projeto console
-│
-├── MindSetCSharp.Core/
-│   ├── Produtivo/
-│   │   └── ProdutivoModule.cs
-│   ├── Bastidores/
-│   │   └── BastidoresModule.cs
-│   ├── Objetos/
-│   │   └── ObjetosModule.cs
-│   ├── Tipos/
-│   │   └── TiposModule.cs
-│   ├── Referencias/
-│   │   └── ReferenciasModule.cs
-│   ├── Encapsulamento/
-│   │   └── EncapsulamentoModule.cs
-│   ├── Herança/
-│   │   └── HerancaModule.cs
-│   ├── Interface/
-│   │   └── InterfaceModule.cs
-│   ├── Classes/
-│   │   └── ClassesModule.cs
-│   ├── Enumerações/
-│   │   └── EnumeracoesModule.cs
-│   ├── Coleções/
-│   │   └── ColecoesModule.cs
-│   ├── Arquivos/
-│   │   └── ArquivosModule.cs
-│   ├── Exceções/
-│   │   └── ExcecoesModule.cs
-│   ├── Eventos/
-│   │   └── EventosModule.cs
-│   ├── Delegates/
-│   │   └── DelegatesModule.cs
-│   ├── Revisão/
-│   │   └── RevisaoModule.cs
-│   ├── Controles/
-│   │   └── ControlesModule.cs
-│   ├── Gráficos/
-│   │   └── GraficosModule.cs
-│   ├── LINQ/
-│   │   └── LINQModule.cs
-│   └── MindSetCSharp.Core.csproj        # Projeto class library
-│
-├── README.md                            # Documentação principal
-├── LICENSE                              # Licença do projeto
-└── .gitignore                           # Arquivos ignorados pelo Git
-```
+- Novo tópico numa edição: `Docs/novo.md` + linha no `Docs/README.md` dessa pasta.
+- Nova edição: novo `.Console`, cópia/adaptação de `Docs/`, entrada na solução — ver [EXTENSION_GUIDE.md](EXTENSION_GUIDE.md).
 
-## Padrões de Código
+## Formato do repositório
 
-### Convenções de Nomenclatura
+[FORMATO_DO_PROJETO.md](FORMATO_DO_PROJETO.md)
 
-- **Namespaces**: PascalCase seguindo a estrutura de pastas
-- **Classes**: PascalCase com sufixo "Module" para módulos
-- **Métodos**: PascalCase (ex: `Run()`)
-- **Propriedades**: PascalCase
+## Contribuição e segurança
 
-### Estrutura de Módulo
-
-Cada módulo segue o padrão:
-
-```csharp
-using System;
-
-namespace MindSetCSharp.Core.[NomeModulo];
-
-public static class [Nome]Module
-{
-    public static void Run()
-    {
-        Console.WriteLine("[Descrição do módulo]");
-        // Implementação específica
-    }
-}
-```
-
-## Próximos Passos
-
-Para expandir o projeto, considere:
-
-1. **Adicionar testes unitários**
-   ```powershell
-   dotnet new xunit -n MindSetCSharp.Tests
-   dotnet sln add MindSetCSharp.Tests/MindSetCSharp.Tests.csproj
-   ```
-
-2. **Implementar exemplos práticos** em cada módulo
-
-3. **Adicionar documentação XML** para IntelliSense
-
-4. **Criar projetos de exemplo** para conceitos avançados
-
-5. **Adicionar configurações EditorConfig** para padronização
-
-## Contribuindo
-
-Este projeto segue os princípios:
-
-- **Código limpo** e legível
-- **Documentação clara** em português
-- **Exemplos práticos** e funcionais
-- **Organização modular** por conceito
-
-## Recursos Adicionais
-
-- [Documentação oficial do .NET](https://learn.microsoft.com/pt-br/dotnet/)
-- [C# Programming Guide](https://learn.microsoft.com/pt-br/dotnet/csharp/)
-- [.NET API Browser](https://learn.microsoft.com/pt-br/dotnet/api/)
-
-## Status do Projeto
-
-✅ Estrutura base implementada  
-✅ Todos os 19 módulos criados  
-✅ Aplicação console funcional  
-✅ Build e execução validados  
-✅ README atualizado  
-
-Projeto pronto para desenvolvimento incremental de conteúdo!
+- [CONTRIBUTING.md](CONTRIBUTING.md)
+- [SECURITY.md](SECURITY.md)

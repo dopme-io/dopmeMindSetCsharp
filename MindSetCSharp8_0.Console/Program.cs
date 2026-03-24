@@ -1,0 +1,12 @@
+Console.WriteLine("=== MindSet C# 8.0 (console) ===");
+Console.WriteLine();
+Console.WriteLine("C# 8.0 — setembro de 2019; primeira grande versão focada em .NET Core 3.0.");
+Console.WriteLine("Destaques: membros readonly, default interface members, patterns (switch,");
+Console.WriteLine("propriedade, tuplo, posicional), using declarations, IAsyncEnumerable,");
+Console.WriteLine("índices/ranges, nullable reference types, …");
+Console.WriteLine();
+Console.WriteLine("Roteiro: MindSetCSharp8_0.Console/Docs/README.md");
+Console.WriteLine("Comece por: Docs/csharp-8-0-overview.md");
+Console.WriteLine();
+Console.WriteLine("Prática: dotnet run --project MindSetCSharp8_0.Console");
+Console.WriteLine();

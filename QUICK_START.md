@@ -1,269 +1,67 @@
-# Guia Rápido - MindSetCSharp.Application
+# Início rápido — MindSetCSharp
 
-## ⚡ Início Rápido (5 minutos)
+## O que é
 
-### 1. O que foi criado?
+Solução com **um console por edição** da linguagem (MindSet). Cada projeto tem **`Docs/`** com guias Markdown.
 
-Uma **nova camada de aplicação** que desacopla o Console do Core:
+| Edição | Pasta do projeto |
+|--------|------------------|
+| C# 1.0 (2002) | `MindSetCSharp1_0.Console` |
+| C# 1.2 (2003, VS .NET 2003) | `MindSetCSharp1_2.Console` |
+| C# 2.0 (2005, VS 2005) | `MindSetCSharp2_0.Console` |
+| C# 3.0 (2007, VS 2008; .NET 3.5) | `MindSetCSharp3_0.Console` |
+| C# 4.0 (2010, VS 2010; .NET 4) | `MindSetCSharp4_0.Console` |
+| C# 5.0 (2012, VS 2012; .NET 4.5) | `MindSetCSharp5_0.Console` |
+| C# 7.0 (2017, VS 2017; .NET Core) | `MindSetCSharp7_0.Console` |
+| C# 7.1 (2017, lançamento pontual; VS 2017) | `MindSetCSharp7_1.Console` |
+| C# 7.2 (2017, VS 2017) | `MindSetCSharp7_2.Console` |
+| C# 7.3 (2018, VS 2017) | `MindSetCSharp7_3.Console` |
+| C# 8.0 (2019, .NET Core 3.0) | `MindSetCSharp8_0.Console` |
+| C# 9.0 (2020, .NET 5) | `MindSetCSharp9_0.Console` |
+| C# 10.0 (2021, .NET 6) | `MindSetCSharp10_0.Console` |
 
-```
-Antes:      Console → Module.Run() → Core
-Depois:     Console → Orchestrator → ModuleService → Core
-```
+## Comandos
 
-### 2. Como usar?
-
-#### Opção A: Executar Tudo (Padrão)
-
-```csharp
-var orchestrator = new ApplicationOrchestrator();
-
-foreach (var module in ModuleServiceFactory.CreateAll())
-{
-    orchestrator.RegisterModule(module);
-}
-
-orchestrator.ExecuteAllModules();
-```
-
-#### Opção B: Executar Um Módulo
-
-```csharp
-var orchestrator = new ApplicationOrchestrator();
-var module = ModuleServiceFactory.Create("LINQ");
-orchestrator.RegisterModule(module);
-orchestrator.ExecuteModule("LINQ");
-```
-
-#### Opção C: Listar Módulos
-
-```csharp
-var modules = orchestrator.GetRegisteredModules();
-foreach (var name in modules)
-{
-    Console.WriteLine(name);
-}
+```powershell
+cd dopmeMindSetCsharp
+dotnet restore
+dotnet build
+dotnet run --project MindSetCSharp1_0.Console
+dotnet run --project MindSetCSharp1_2.Console
+dotnet run --project MindSetCSharp2_0.Console
+dotnet run --project MindSetCSharp3_0.Console
+dotnet run --project MindSetCSharp4_0.Console
+dotnet run --project MindSetCSharp5_0.Console
+dotnet run --project MindSetCSharp7_0.Console
+dotnet run --project MindSetCSharp7_1.Console
+dotnet run --project MindSetCSharp7_2.Console
+dotnet run --project MindSetCSharp7_3.Console
+dotnet run --project MindSetCSharp8_0.Console
+dotnet run --project MindSetCSharp9_0.Console
+dotnet run --project MindSetCSharp10_0.Console
 ```
 
-### 3. Estrutura
-
-```
-MindSetCSharp.Application/
-├── Interfaces/        ← Contratos (IModuleService, IApplicationOrchestrator)
-├── Services/          ← Implementação (ApplicationOrchestrator)
-├── Modules/           ← 19 adaptadores (ProdutivoModuleService, etc.)
-└── Factories/         ← ModuleServiceFactory
-```
-
-### 4. Arquivos Importantes
-
-| Arquivo | Propósito |
-|---------|-----------|
-| `IModuleService` | Define que todo módulo precisa de `ModuleName` e `Execute()` |
-| `IApplicationOrchestrator` | Define como registrar e executar módulos |
-| `ApplicationOrchestrator` | Implementação que gerencia execução |
-| `ModuleServiceFactory` | Cria instâncias de módulos |
-
-### 5. Adicionar Novo Módulo (3 Passos)
-
-**Passo 1**: Criar `*ModuleService` em `Modules/`
-```csharp
-public class MeuTemaModuleService : IModuleService
-{
-    public string ModuleName => "MeuTema";
-    public void Execute() => MeuTemaModule.Run();
-}
-```
-
-**Passo 2**: Adicionar à `ModuleServiceFactory`
-```csharp
-"MeuTema" => new MeuTemaModuleService(),
-```
-
-**Passo 3**: Pronto! Usar normalmente
-```csharp
-var module = ModuleServiceFactory.Create("MeuTema");
-```
-
----
-
-## 📚 Documentação Completa
-
-| Arquivo | Quando Ler |
-|---------|-----------|
-| [ARCHITECTURE.md](ARCHITECTURE.md) | Entender a estrutura geral |
-| [ARCHITECTURE_DIAGRAM.md](ARCHITECTURE_DIAGRAM.md) | Ver diagramas visuais |
-| [EXTENSION_GUIDE.md](EXTENSION_GUIDE.md) | Adicionar funcionalidades |
-| [USAGE_EXAMPLES.md](USAGE_EXAMPLES.md) | Ver exemplos práticos |
-| [REFACTORING_SUMMARY.md](REFACTORING_SUMMARY.md) | Entender as mudanças |
-
----
-
-## 🎯 Benefícios Principais
-
-| Benefício | Antes | Depois |
-|-----------|-------|--------|
-| **Acoplamento** | Console depende de 19 módulos | Console usa abstração |
-| **Flexibilidade** | Adicionar módulo = editar Console | Só criar `*ModuleService` |
-| **Testes** | Difícil mockar | Interfaces facilitam mocks |
-| **Manutenção** | 19 imports no Console | Factory centraliza tudo |
-
----
-
-## ❓ Perguntas Frequentes
-
-### P: Preciso mudar algo no Console?
-
-**R**: Não! O Console está pronto. Ele usa `ApplicationOrchestrator` e `ModuleServiceFactory`.
-
-### P: Como adicionar um novo módulo?
-
-**R**: Criar `*ModuleService` em `Modules/` e registrar em `ModuleServiceFactory`. Veja [EXTENSION_GUIDE.md](EXTENSION_GUIDE.md).
-
-### P: Posso criar meu próprio Orchestrator?
-
-**R**: Sim! Implemente `IApplicationOrchestrator`. Veja exemplo em [USAGE_EXAMPLES.md](USAGE_EXAMPLES.md#7-implementar-um-orquestrador-customizado).
-
-### P: Como testar isso?
-
-**R**: Use Moq com as interfaces. Exemplo em [USAGE_EXAMPLES.md](USAGE_EXAMPLES.md#12-mocking-para-testes).
-
-### P: Posso usar com Injeção de Dependência?
-
-**R**: Sim! Estrutura está pronta. Exemplo em [USAGE_EXAMPLES.md](USAGE_EXAMPLES.md#10-usar-com-injeção-de-dependência-futuro).
-
----
-
-## 🔧 Estrutura de Namespaces
-
-```
-MindSetCSharp
-├── Console.*              ← Apresentação
-├── Application
-│   ├── .Interfaces       ← Contratos
-│   ├── .Services         ← Orquestração
-│   ├── .Modules          ← Adaptadores
-│   └── .Factories        ← Criação
-└── Core.*                ← Domínio
-```
-
-**Regra**: Console → Application → Core (sem volta!)
-
----
-
-## 📦 Dependências Entre Projetos
-
-```
-MindSetCSharp.Console
-  ↓ (depende de)
-MindSetCSharp.Application
-  ↓ (depende de)
-MindSetCSharp.Core
-```
-
-- ✅ Sem dependências cíclicas
-- ✅ Fluxo claro de dependências
-- ✅ Fácil entender o que depende do quê
-
----
-
-## 🚀 Exemplos Rápidos
-
-### Listar Todos os Módulos
-
-```csharp
-var factory = new ModuleServiceFactory();
-var modules = ModuleServiceFactory.CreateAll();
-
-foreach (var module in modules)
-{
-    Console.WriteLine(module.ModuleName);
-}
-```
-
-**Output:**
-```
-Produtivo
-Bastidores
-Objetos
-Tipos
-...
-LINQ
-```
-
-### Executar Módulo Especificado pelo Usuário
-
-```csharp
-var orchestrator = new ApplicationOrchestrator();
-ModuleServiceFactory.CreateAll().ForEach(m => 
-    orchestrator.RegisterModule(m));
-
-Console.Write("Digite o módulo: ");
-string nome = Console.ReadLine() ?? "";
-
-orchestrator.ExecuteModule(nome);
-```
-
-### Contar Quantos Módulos Têm
-
-```csharp
-var count = ModuleServiceFactory.CreateAll().Count();
-Console.WriteLine($"Total: {count} módulos");
-```
-
----
-
-## 💡 Dicas
-
-1. **Use Factory** para criar módulos, não `new SeuModuleService()`
-2. **Dependa de interfaces**, não de implementações
-3. **ApplicationOrchestrator trata erros**, seus serviços podem ser seguros
-4. **Namespaces globais** já estão configurados em GlobalUsings.cs
-
----
-
-## ✅ Validação
-
-Para confirmar que tudo está funcionando:
-
-1. Abra a solução em Visual Studio
-2. Build MindSetCSharp.Console
-3. Execute o programa
-4. Deve ver os 19 módulos sendo executados
-
-Se der erro, verifique se as referências de projeto estão corretas.
-
----
-
-## 📚 Próximas Leituras
-
-**Se quiser entender mais:**
-1. Leia [ARCHITECTURE.md](ARCHITECTURE.md) para visão completa
-2. Leia [EXTENSION_GUIDE.md](EXTENSION_GUIDE.md) para estender
-3. Veja código em `MindSetCSharp.Application/` para ver padrões
-
-**Se quiser adicionar funcionalidades:**
-1. Veja [USAGE_EXAMPLES.md](USAGE_EXAMPLES.md) para inspiração
-2. Implemente `IModuleService` para novo módulo
-3. Ou implemente `IApplicationOrchestrator` para novo orquestrador
-
----
-
-## 🎯 Resumo em 1 Minuto
-
-- ✅ Nova camada `MindSetCSharp.Application` criada
-- ✅ 19 `ModuleService` implementados
-- ✅ `ApplicationOrchestrator` orquestra execução
-- ✅ `ModuleServiceFactory` cria instâncias
-- ✅ Console refatorado e desacoplado
-- ✅ Documentação completa disponível
-
-**Status**: 🟢 Pronto para usar!
-
----
-
-**Dúvidas?** Consulte um dos documentos listados acima.
-
-**Quer contribuir?** Veja [EXTENSION_GUIDE.md](EXTENSION_GUIDE.md).
-
-**Quer ver exemplos?** Veja [USAGE_EXAMPLES.md](USAGE_EXAMPLES.md).
+## Onde ler
+
+- **1.0:** [MindSetCSharp1_0.Console/Docs/README.md](MindSetCSharp1_0.Console/Docs/README.md)
+- **1.2:** [MindSetCSharp1_2.Console/Docs/README.md](MindSetCSharp1_2.Console/Docs/README.md) (comece por `csharp-1-2-enhancements.md`)
+- **2.0:** [MindSetCSharp2_0.Console/Docs/README.md](MindSetCSharp2_0.Console/Docs/README.md) (comece por `csharp-2-0-overview.md`)
+- **3.0:** [MindSetCSharp3_0.Console/Docs/README.md](MindSetCSharp3_0.Console/Docs/README.md) (comece por `csharp-3-0-overview.md`)
+- **4.0:** [MindSetCSharp4_0.Console/Docs/README.md](MindSetCSharp4_0.Console/Docs/README.md) (comece por `csharp-4-0-overview.md`)
+- **5.0:** [MindSetCSharp5_0.Console/Docs/README.md](MindSetCSharp5_0.Console/Docs/README.md) (comece por `csharp-5-0-overview.md`)
+- **7.0:** [MindSetCSharp7_0.Console/Docs/README.md](MindSetCSharp7_0.Console/Docs/README.md) (comece por `csharp-7-0-overview.md`; não há projeto MindSet 6.0)
+- **7.1:** [MindSetCSharp7_1.Console/Docs/README.md](MindSetCSharp7_1.Console/Docs/README.md) (comece por `csharp-7-1-overview.md`)
+- **7.2:** [MindSetCSharp7_2.Console/Docs/README.md](MindSetCSharp7_2.Console/Docs/README.md) (comece por `csharp-7-2-overview.md`)
+- **7.3:** [MindSetCSharp7_3.Console/Docs/README.md](MindSetCSharp7_3.Console/Docs/README.md) (comece por `csharp-7-3-overview.md`)
+- **8.0:** [MindSetCSharp8_0.Console/Docs/README.md](MindSetCSharp8_0.Console/Docs/README.md) (comece por `csharp-8-0-overview.md`)
+- **9.0:** [MindSetCSharp9_0.Console/Docs/README.md](MindSetCSharp9_0.Console/Docs/README.md) (comece por `csharp-9-0-overview.md`)
+- **10.0:** [MindSetCSharp10_0.Console/Docs/README.md](MindSetCSharp10_0.Console/Docs/README.md) (comece por `csharp-10-0-overview.md`)
+
+## Praticar código
+
+Copie exemplos para o `Program.cs` do projeto da edição escolhida (ou novos `.cs` nesse projeto) e execute `dotnet run --project …`.
+
+## Mais
+
+- [FORMATO_DO_PROJETO.md](FORMATO_DO_PROJETO.md)
+- [DOCUMENTATION_INDEX.md](DOCUMENTATION_INDEX.md)

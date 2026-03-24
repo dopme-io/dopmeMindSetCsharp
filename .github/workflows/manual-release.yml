@@ -1,154 +1,153 @@
+# Release manual: publica todos os projetos console, cria tag e anexa ZIPs (inclui macOS ARM64).
+# Tags criadas por este workflow usam o actor github-actions[bot]; o workflow release.yml ignora esse push para não duplicar o release.
 name: Manual Release
 
 on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Version number (e.g., 1.0.0 or 2.0.0)'
+        description: 'Versão semântica (ex.: 1.0.0)'
         required: true
         type: string
       prerelease:
-        description: 'Mark as pre-release'
+        description: 'Marcar como pré-release'
         required: false
         type: boolean
         default: false
+
+env:
+  DOTNET_VERSION: '10.0.x'
+  SOLUTION: MindSetCSharp.sln
 
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
-    
-    - name: Validate version format
+
+    - name: Validar formato da versão
       run: |
         if ! [[ "${{ github.event.inputs.version }}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-          echo "Error: Version must be in format X.Y.Z (e.g., 1.0.0)"
+          echo "::error::A versão deve ser X.Y.Z (ex.: 1.0.0)"
           exit 1
         fi
-    
-    - name: Check if tag exists
+
+    - name: Verificar se a tag já existe
       run: |
         if git rev-parse "v${{ github.event.inputs.version }}" >/dev/null 2>&1; then
-          echo "Error: Tag v${{ github.event.inputs.version }} already exists"
+          echo "::error::A tag v${{ github.event.inputs.version }} já existe."
           exit 1
         fi
-    
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 10.0.x
-    
-    - name: Restore dependencies
-      run: dotnet restore
-    
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
-    
-    - name: Test
-      run: dotnet test --configuration Release --no-build --verbosity normal
-    
-    - name: Publish Console App - Windows x64
-      run: dotnet publish MindSetCSharp.Console/MindSetCSharp.Console.csproj -c Release -r win-x64 --self-contained true -o ./publish/win-x64
-    
-    - name: Publish Console App - Linux x64
-      run: dotnet publish MindSetCSharp.Console/MindSetCSharp.Console.csproj -c Release -r linux-x64 --self-contained true -o ./publish/linux-x64
-    
-    - name: Publish Console App - macOS x64
-      run: dotnet publish MindSetCSharp.Console/MindSetCSharp.Console.csproj -c Release -r osx-x64 --self-contained true -o ./publish/osx-x64
-    
-    - name: Publish Console App - macOS ARM64
-      run: dotnet publish MindSetCSharp.Console/MindSetCSharp.Console.csproj -c Release -r osx-arm64 --self-contained true -o ./publish/osx-arm64
-    
-    - name: Create ZIP archives
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Restore and build
       run: |
-        cd publish
-        zip -r ../MindSetCSharp-v${{ github.event.inputs.version }}-win-x64.zip win-x64
-        zip -r ../MindSetCSharp-v${{ github.event.inputs.version }}-linux-x64.zip linux-x64
-        zip -r ../MindSetCSharp-v${{ github.event.inputs.version }}-osx-x64.zip osx-x64
-        zip -r ../MindSetCSharp-v${{ github.event.inputs.version }}-osx-arm64.zip osx-arm64
-        cd ..
-    
-    - name: Create and push tag
+        dotnet restore ${{ env.SOLUTION }}
+        dotnet build ${{ env.SOLUTION }} --configuration Release --no-restore
+
+    - name: Publish all console projects (self-contained)
+      run: |
+        set -euo pipefail
+        VERSION="${{ github.event.inputs.version }}"
+        ROOT="$GITHUB_WORKSPACE"
+        cd "$ROOT"
+
+        mapfile -t PROJECTS < <(find . -type f -name '*.csproj' \
+          ! -path '*/obj/*' ! -path '*/bin/*' \
+          -exec grep -l '<OutputType>Exe</OutputType>' {} \; | sed 's|^\./||' | sort -u)
+
+        if [ ${#PROJECTS[@]} -eq 0 ]; then
+          echo "::error::Nenhum .csproj com <OutputType>Exe</OutputType> encontrado."
+          exit 1
+        fi
+
+        echo "Projetos console a publicar:"
+        printf ' - %s\n' "${PROJECTS[@]}"
+
+        RIDS=(win-x64 linux-x64 osx-x64 osx-arm64)
+        for proj in "${PROJECTS[@]}"; do
+          pkg=$(basename "$(dirname "$proj")")
+          for rid in "${RIDS[@]}"; do
+            out="$ROOT/build-out/${pkg}/${rid}"
+            mkdir -p "$out"
+            dotnet publish "$proj" -c Release -r "$rid" --self-contained true -o "$out" --no-build
+            (cd "$out" && zip -r "$ROOT/MindSetCSharp-${pkg}-v${VERSION}-${rid}.zip" .)
+          done
+        done
+
+    - name: Criar e enviar tag
       run: |
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
-        git tag -a "v${{ github.event.inputs.version }}" -m "Release version ${{ github.event.inputs.version }}"
+        git tag -a "v${{ github.event.inputs.version }}" -m "Release v${{ github.event.inputs.version }}"
         git push origin "v${{ github.event.inputs.version }}"
-    
-    - name: Generate changelog
+
+    - name: Gerar changelog
       id: changelog
       run: |
         PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
-        
         if [ -z "$PREV_TAG" ]; then
           echo "CHANGELOG<<EOF" >> $GITHUB_OUTPUT
-          echo "## Changes" >> $GITHUB_OUTPUT
+          echo "## Alterações" >> $GITHUB_OUTPUT
           echo "" >> $GITHUB_OUTPUT
-          echo "Initial release of MindSetCSharp" >> $GITHUB_OUTPUT
-          echo "" >> $GITHUB_OUTPUT
-          echo "### Features" >> $GITHUB_OUTPUT
-          echo "- Complete C# learning modules" >> $GITHUB_OUTPUT
-          echo "- Interactive console application" >> $GITHUB_OUTPUT
-          echo "- Comprehensive examples and documentation" >> $GITHUB_OUTPUT
+          echo "Primeira release — projetos console da solução MindSetCSharp." >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
         else
           echo "CHANGELOG<<EOF" >> $GITHUB_OUTPUT
-          echo "## Changes from $PREV_TAG to v${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+          echo "## Alterações de $PREV_TAG a v${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
           echo "" >> $GITHUB_OUTPUT
-          git log $PREV_TAG..HEAD --pretty=format:"- %s (%h)" >> $GITHUB_OUTPUT
+          git log "$PREV_TAG"..HEAD --pretty=format:"- %s (%h)" >> $GITHUB_OUTPUT
           echo "" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
         fi
-    
+
+    - name: List ZIPs for release
+      id: zips
+      run: |
+        VERSION="${{ github.event.inputs.version }}"
+        cd "$GITHUB_WORKSPACE"
+        shopt -s nullglob
+        mapfile -t Z < <(ls -1 MindSetCSharp-*-v"${VERSION}"-*.zip 2>/dev/null || true)
+        if [ ${#Z[@]} -eq 0 ]; then
+          echo "::error::Nenhum ZIP encontrado (MindSetCSharp-*-v${VERSION}-*.zip)."
+          exit 1
+        fi
+        {
+          echo 'ZIP_PATHS<<EOF'
+          printf '%s\n' "${Z[@]}"
+          echo 'EOF'
+        } >> $GITHUB_OUTPUT
+
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
+        token: ${{ secrets.GITHUB_TOKEN }}
         tag_name: v${{ github.event.inputs.version }}
         name: Release v${{ github.event.inputs.version }}
         body: |
           # MindSetCSharp v${{ github.event.inputs.version }}
-          
+
           ${{ steps.changelog.outputs.CHANGELOG }}
-          
+
           ## Downloads
-          
-          Choose the appropriate package for your operating system:
-          - **Windows x64**: `MindSetCSharp-v${{ github.event.inputs.version }}-win-x64.zip`
-          - **Linux x64**: `MindSetCSharp-v${{ github.event.inputs.version }}-linux-x64.zip`
-          - **macOS Intel (x64)**: `MindSetCSharp-v${{ github.event.inputs.version }}-osx-x64.zip`
-          - **macOS Apple Silicon (ARM64)**: `MindSetCSharp-v${{ github.event.inputs.version }}-osx-arm64.zip`
-          
-          ## Installation
-          
-          1. Download the appropriate ZIP file for your OS
-          2. Extract the ZIP file
-          3. Run the executable inside the extracted folder:
-             - **Windows**: Double-click `MindSetCSharp.Console.exe`
-             - **Linux/macOS**: Run `./MindSetCSharp.Console` in terminal
-          
-          ## What's Included
-          
-          - Self-contained executable (no .NET installation required)
-          - All learning modules and examples
-          - Complete documentation
-          
-          ## Documentation
-          
-          - [README](https://github.com/${{ github.repository }}/blob/main/README.md)
-          - [Quick Start Guide](https://github.com/${{ github.repository }}/blob/main/QUICK_START.md)
-          - [Documentation Index](https://github.com/${{ github.repository }}/blob/main/DOCUMENTATION_INDEX.md)
-        files: |
-          MindSetCSharp-v${{ github.event.inputs.version }}-win-x64.zip
-          MindSetCSharp-v${{ github.event.inputs.version }}-linux-x64.zip
-          MindSetCSharp-v${{ github.event.inputs.version }}-osx-x64.zip
-          MindSetCSharp-v${{ github.event.inputs.version }}-osx-arm64.zip
+
+          Um ZIP por **projeto console** e por **runtime** (`MindSetCSharp-<PastaProjeto>-v<versão>-<rid>.zip`).
+
+          - **Windows x64**: execute o `.exe` com o nome do projeto (ex.: `MindSetCSharp1_0.Console.exe`, `MindSetCSharp1_2.Console.exe`, `MindSetCSharp2_0.Console.exe`, `MindSetCSharp3_0.Console.exe`, `MindSetCSharp4_0.Console.exe`, `MindSetCSharp5_0.Console.exe`, `MindSetCSharp7_0.Console.exe`, `MindSetCSharp7_1.Console.exe`, `MindSetCSharp7_2.Console.exe`, `MindSetCSharp7_3.Console.exe`, `MindSetCSharp8_0.Console.exe`, `MindSetCSharp9_0.Console.exe`, `MindSetCSharp10_0.Console.exe`) dentro do ZIP correspondente.
+          - **Linux / macOS**: execute o binário com o nome do assembly no terminal.
+
+          Documentação: [README](https://github.com/${{ github.repository }}/blob/main/README.md) · [Docs C# 1.0](https://github.com/${{ github.repository }}/tree/main/MindSetCSharp1_0.Console/Docs) · [Docs C# 1.2](https://github.com/${{ github.repository }}/tree/main/MindSetCSharp1_2.Console/Docs) · [Docs C# 2.0](https://github.com/${{ github.repository }}/tree/main/MindSetCSharp2_0.Console/Docs) · [Docs C# 3.0](https://github.com/${{ github.repository }}/tree/main/MindSetCSharp3_0.Console/Docs) · [Docs C# 4.0](https://github.com/${{ github.repository }}/tree/main/MindSetCSharp4_0.Console/Docs) · [Docs C# 5.0](https://github.com/${{ github.repository }}/tree/main/MindSetCSharp5_0.Console/Docs) · [Docs C# 7.0](https://github.com/${{ github.repository }}/tree/main/MindSetCSharp7_0.Console/Docs) · [Docs C# 7.1](https://github.com/${{ github.repository }}/tree/main/MindSetCSharp7_1.Console/Docs) · [Docs C# 7.2](https://github.com/${{ github.repository }}/tree/main/MindSetCSharp7_2.Console/Docs) · [Docs C# 7.3](https://github.com/${{ github.repository }}/tree/main/MindSetCSharp7_3.Console/Docs) · [Docs C# 8.0](https://github.com/${{ github.repository }}/tree/main/MindSetCSharp8_0.Console/Docs) · [Docs C# 9.0](https://github.com/${{ github.repository }}/tree/main/MindSetCSharp9_0.Console/Docs) · [Docs C# 10.0](https://github.com/${{ github.repository }}/tree/main/MindSetCSharp10_0.Console/Docs)
+
+        files: ${{ steps.zips.outputs.ZIP_PATHS }}
         draft: false
         prerelease: ${{ github.event.inputs.prerelease }}
-      env:
-        TOKENUSEMINDCSHARP: ${{ secrets.TOKENUSEMINDCSHARP }}

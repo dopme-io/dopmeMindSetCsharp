@@ -1,0 +1,11 @@
+Console.WriteLine("=== MindSet C# 5.0 (console) ===");
+Console.WriteLine();
+Console.WriteLine("C# 5.0 — agosto de 2012, Visual Studio 2012.");
+Console.WriteLine("Foco: async/await (programação assíncrona de primeira classe) e");
+Console.WriteLine("atributos de informação do chamador (diagnóstico / logging).");
+Console.WriteLine();
+Console.WriteLine("Roteiro: MindSetCSharp5_0.Console/Docs/README.md");
+Console.WriteLine("Comece por: Docs/csharp-5-0-overview.md");
+Console.WriteLine();
+Console.WriteLine("Prática: dotnet run --project MindSetCSharp5_0.Console");
+Console.WriteLine();

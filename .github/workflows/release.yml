@@ -1,63 +1,77 @@
+# Release ao criar tag v*.*.* — publica todos os projetos console (OutputType Exe) para vários RIDs.
 name: Create Release
 
 on:
   push:
     tags:
-      - 'v*.*.*'  # Triggers on version tags like v1.0.0, v2.0.0, etc.
+      - 'v*.*.*'
+
+env:
+  DOTNET_VERSION: '10.0.x'
+  SOLUTION: MindSetCSharp.sln
 
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
+    # Evita duplicar release quando a tag é criada pelo workflow "Manual Release" (actor github-actions[bot]).
+    if: ${{ github.actor != 'github-actions[bot]' }}
     permissions:
       contents: write
-      
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
       with:
-        fetch-depth: 0  # Fetch all history for changelog generation
-    
+        fetch-depth: 0
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 10.0.x
-    
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
     - name: Extract version from tag
       id: extract_version
       run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
-    
-    - name: Restore dependencies
-      run: dotnet restore
-    
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
-    
-    - name: Test
-      run: dotnet test --configuration Release --no-build --verbosity normal
-    
-    - name: Publish Console App - Windows x64
-      run: dotnet publish MindSetCSharp.Console/MindSetCSharp.Console.csproj -c Release -r win-x64 --self-contained true -o ./publish/win-x64
-    
-    - name: Publish Console App - Linux x64
-      run: dotnet publish MindSetCSharp.Console/MindSetCSharp.Console.csproj -c Release -r linux-x64 --self-contained true -o ./publish/linux-x64
-    
-    - name: Publish Console App - macOS x64
-      run: dotnet publish MindSetCSharp.Console/MindSetCSharp.Console.csproj -c Release -r osx-x64 --self-contained true -o ./publish/osx-x64
-    
-    - name: Create ZIP archives
+
+    - name: Restore and build
       run: |
-        cd publish
-        zip -r ../MindSetCSharp-v${{ steps.extract_version.outputs.VERSION }}-win-x64.zip win-x64
-        zip -r ../MindSetCSharp-v${{ steps.extract_version.outputs.VERSION }}-linux-x64.zip linux-x64
-        zip -r ../MindSetCSharp-v${{ steps.extract_version.outputs.VERSION }}-osx-x64.zip osx-x64
-        cd ..
-    
+        dotnet restore ${{ env.SOLUTION }}
+        dotnet build ${{ env.SOLUTION }} --configuration Release --no-restore
+
+    - name: Publish all console projects (self-contained)
+      run: |
+        set -euo pipefail
+        VERSION="${{ steps.extract_version.outputs.VERSION }}"
+        ROOT="$GITHUB_WORKSPACE"
+        cd "$ROOT"
+
+        mapfile -t PROJECTS < <(find . -type f -name '*.csproj' \
+          ! -path '*/obj/*' ! -path '*/bin/*' \
+          -exec grep -l '<OutputType>Exe</OutputType>' {} \; | sed 's|^\./||' | sort -u)
+
+        if [ ${#PROJECTS[@]} -eq 0 ]; then
+          echo "::error::Nenhum .csproj com <OutputType>Exe</OutputType> encontrado."
+          exit 1
+        fi
+
+        echo "Projetos console a publicar:"
+        printf ' - %s\n' "${PROJECTS[@]}"
+
+        RIDS=(win-x64 linux-x64 osx-x64 osx-arm64)
+        for proj in "${PROJECTS[@]}"; do
+          pkg=$(basename "$(dirname "$proj")")
+          for rid in "${RIDS[@]}"; do
+            out="$ROOT/build-out/${pkg}/${rid}"
+            mkdir -p "$out"
+            dotnet publish "$proj" -c Release -r "$rid" --self-contained true -o "$out" --no-build
+            (cd "$out" && zip -r "$ROOT/MindSetCSharp-${pkg}-v${VERSION}-${rid}.zip" .)
+          done
+        done
+
     - name: Generate changelog
       id: changelog
       run: |
-        # Get previous tag
         PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
-        
         if [ -z "$PREV_TAG" ]; then
           echo "CHANGELOG<<EOF" >> $GITHUB_OUTPUT
           echo "## Changes" >> $GITHUB_OUTPUT
@@ -68,41 +82,44 @@ jobs:
           echo "CHANGELOG<<EOF" >> $GITHUB_OUTPUT
           echo "## Changes from $PREV_TAG to ${{ github.ref_name }}" >> $GITHUB_OUTPUT
           echo "" >> $GITHUB_OUTPUT
-          git log $PREV_TAG..HEAD --pretty=format:"- %s (%h)" >> $GITHUB_OUTPUT
+          git log "$PREV_TAG"..HEAD --pretty=format:"- %s (%h)" >> $GITHUB_OUTPUT
           echo "" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
         fi
-    
+
+    - name: List ZIPs for release
+      id: zips
+      run: |
+        VERSION="${{ steps.extract_version.outputs.VERSION }}"
+        cd "$GITHUB_WORKSPACE"
+        shopt -s nullglob
+        mapfile -t Z < <(ls -1 MindSetCSharp-*-v"${VERSION}"-*.zip 2>/dev/null || true)
+        if [ ${#Z[@]} -eq 0 ]; then
+          echo "::error::Nenhum ZIP encontrado (MindSetCSharp-*-v${VERSION}-*.zip)."
+          exit 1
+        fi
+        {
+          echo 'ZIP_PATHS<<EOF'
+          printf '%s\n' "${Z[@]}"
+          echo 'EOF'
+        } >> $GITHUB_OUTPUT
+
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
+        token: ${{ secrets.GITHUB_TOKEN }}
         name: Release v${{ steps.extract_version.outputs.VERSION }}
         body: |
           # MindSetCSharp v${{ steps.extract_version.outputs.VERSION }}
-          
+
           ${{ steps.changelog.outputs.CHANGELOG }}
-          
+
           ## Downloads
-          
-          Choose the appropriate package for your operating system:
-          - **Windows**: `MindSetCSharp-v${{ steps.extract_version.outputs.VERSION }}-win-x64.zip`
-          - **Linux**: `MindSetCSharp-v${{ steps.extract_version.outputs.VERSION }}-linux-x64.zip`
-          - **macOS**: `MindSetCSharp-v${{ steps.extract_version.outputs.VERSION }}-osx-x64.zip`
-          
-          ## Installation
-          
-          1. Download the appropriate ZIP file for your OS
-          2. Extract the ZIP file
-          3. Run the executable inside the extracted folder
-          
-          ## Documentation
-          
-          For more information, see the [README](https://github.com/${{ github.repository }}/blob/main/README.md)
-        files: |
-          MindSetCSharp-v${{ steps.extract_version.outputs.VERSION }}-win-x64.zip
-          MindSetCSharp-v${{ steps.extract_version.outputs.VERSION }}-linux-x64.zip
-          MindSetCSharp-v${{ steps.extract_version.outputs.VERSION }}-osx-x64.zip
+
+          Cada **projeto console** na solução gera um ZIP por sistema operativo (nome: `MindSetCSharp-<PastaProjeto>-v<versão>-<rid>.zip`). Extraia o ficheiro e execute o `.exe` (Windows) ou o binário com o nome do assembly (Linux/macOS).
+
+          Documentação: [README](https://github.com/${{ github.repository }}/blob/main/README.md) · [Docs C# 1.0](https://github.com/${{ github.repository }}/tree/main/MindSetCSharp1_0.Console/Docs) · [Docs C# 1.2](https://github.com/${{ github.repository }}/tree/main/MindSetCSharp1_2.Console/Docs) · [Docs C# 2.0](https://github.com/${{ github.repository }}/tree/main/MindSetCSharp2_0.Console/Docs) · [Docs C# 3.0](https://github.com/${{ github.repository }}/tree/main/MindSetCSharp3_0.Console/Docs) · [Docs C# 4.0](https://github.com/${{ github.repository }}/tree/main/MindSetCSharp4_0.Console/Docs) · [Docs C# 5.0](https://github.com/${{ github.repository }}/tree/main/MindSetCSharp5_0.Console/Docs) · [Docs C# 7.0](https://github.com/${{ github.repository }}/tree/main/MindSetCSharp7_0.Console/Docs) · [Docs C# 7.1](https://github.com/${{ github.repository }}/tree/main/MindSetCSharp7_1.Console/Docs) · [Docs C# 7.2](https://github.com/${{ github.repository }}/tree/main/MindSetCSharp7_2.Console/Docs) · [Docs C# 7.3](https://github.com/${{ github.repository }}/tree/main/MindSetCSharp7_3.Console/Docs) · [Docs C# 8.0](https://github.com/${{ github.repository }}/tree/main/MindSetCSharp8_0.Console/Docs) · [Docs C# 9.0](https://github.com/${{ github.repository }}/tree/main/MindSetCSharp9_0.Console/Docs) · [Docs C# 10.0](https://github.com/${{ github.repository }}/tree/main/MindSetCSharp10_0.Console/Docs)
+
+        files: ${{ steps.zips.outputs.ZIP_PATHS }}
         draft: false
         prerelease: false
-      env:
-        TOKENUSEMINDCSHARP: ${{ secrets.TOKENUSEMINDCSHARP }}

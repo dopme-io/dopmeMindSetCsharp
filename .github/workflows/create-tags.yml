@@ -1,66 +1,56 @@
-name: Create Version Tags
+# Cria uma tag anotada vX.Y.Z no commit atual (útil antes de disparar o workflow de release por tag).
+# Não publica artefactos — para release completo use "Manual Release" ou push de tag + workflow release.yml.
+name: Create Version Tag
 
 on:
   workflow_dispatch:
     inputs:
-      create_v1:
-        description: 'Create tag v1.0.0'
-        required: false
-        type: boolean
-        default: false
-      create_v2:
-        description: 'Create tag v2.0.0'
-        required: false
-        type: boolean
-        default: false
+      version:
+        description: 'Versão semântica sem prefixo v (ex.: 1.0.0 ou 2.1.3)'
+        required: true
+        type: string
 
 jobs:
-  create-tags:
+  create-tag:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
-    
-    - name: Configure Git
+
+    - name: Validar formato da versão
+      run: |
+        if ! [[ "${{ github.event.inputs.version }}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+          echo "::error::Use o formato X.Y.Z (ex.: 1.0.0)"
+          exit 1
+        fi
+
+    - name: Verificar se a tag já existe
+      run: |
+        if git rev-parse "v${{ github.event.inputs.version }}" >/dev/null 2>&1; then
+          echo "::error::A tag v${{ github.event.inputs.version }} já existe."
+          exit 1
+        fi
+
+    - name: Configurar Git
       run: |
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
-    
-    - name: Create tag v1.0.0
-      if: github.event.inputs.create_v1 == 'true'
+
+    - name: Criar e enviar tag v${{ github.event.inputs.version }}
       run: |
-        if git rev-parse "v1.0.0" >/dev/null 2>&1; then
-          echo "Tag v1.0.0 already exists, skipping..."
-        else
-          git tag -a "v1.0.0" -m "Release version 1.0.0"
-          git push origin "v1.0.0"
-          echo "Created and pushed tag v1.0.0"
-        fi
-    
-    - name: Create tag v2.0.0
-      if: github.event.inputs.create_v2 == 'true'
+        git tag -a "v${{ github.event.inputs.version }}" -m "Tag v${{ github.event.inputs.version }}"
+        git push origin "v${{ github.event.inputs.version }}"
+        echo "Tag v${{ github.event.inputs.version }} criada e enviada."
+
+    - name: Resumo
       run: |
-        if git rev-parse "v2.0.0" >/dev/null 2>&1; then
-          echo "Tag v2.0.0 already exists, skipping..."
-        else
-          git tag -a "v2.0.0" -m "Release version 2.0.0"
-          git push origin "v2.0.0"
-          echo "Created and pushed tag v2.0.0"
-        fi
-    
-    - name: Summary
-      run: |
-        echo "## Tags Created" >> $GITHUB_STEP_SUMMARY
-        if [ "${{ github.event.inputs.create_v1 }}" == "true" ]; then
-          echo "- v1.0.0 ✅" >> $GITHUB_STEP_SUMMARY
-        fi
-        if [ "${{ github.event.inputs.create_v2 }}" == "true" ]; then
-          echo "- v2.0.0 ✅" >> $GITHUB_STEP_SUMMARY
-        fi
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "The release workflow will now be triggered automatically for the created tags." >> $GITHUB_STEP_SUMMARY
+        echo "## Tag criada" >> "$GITHUB_STEP_SUMMARY"
+        echo "" >> "$GITHUB_STEP_SUMMARY"
+        echo "- **v${{ github.event.inputs.version }}** (push via \`github-actions[bot]\`)" >> "$GITHUB_STEP_SUMMARY"
+        echo "" >> "$GITHUB_STEP_SUMMARY"
+        echo "Este workflow **não** gera ZIPs nem release. Para artefactos completos use **Manual Release**. Para disparar só o empacotamento com tag criada localmente por si, faça \`git tag\` / \`git push\` no seu ambiente — o workflow **Create Release** corre com o seu actor e publica os ZIPs." >> "$GITHUB_STEP_SUMMARY"
